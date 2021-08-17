@@ -22,6 +22,9 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
         Blazor.start().then(function () {
+            var customScript1 = document.createElement('script');
+            customScript1.setAttribute('src', 'bootstrap.bundle.min.js');
+            document.head.appendChild(customScript1);
             var customScript = document.createElement('script');
             customScript.setAttribute('src', 'js/scripts.js');
             document.head.appendChild(customScript);
