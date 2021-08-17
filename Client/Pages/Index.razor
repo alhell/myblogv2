@@ -25,7 +25,7 @@
                 <!-- Post preview-->
                 <div class="post-preview">
                     <a href="post.html">
-                        <h2 class="post-title">No posts available</h2>
+                        <h2 class="post-title">Loading.....</h2>
                     </a>
                     <p class="post-meta">
                     </p>
@@ -37,7 +37,7 @@
                 {
                     <!-- Post preview-->
                     <div class="post-preview">
-                        <a href="post.html">
+                        <a href="@($"post/{post.PostRoute}")">
                             <h2 class="post-title">@post.Title</h2>
                             <h3 class="post-subtitle">@post.SubTitle</h3>
                         </a>
@@ -56,13 +56,13 @@
 </div>
 
 @code {
-    private Post[] posts;
+    private BlogPost[] posts;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            posts = await Http.GetFromJsonAsync<Post[]>("/api/posts");
+            posts = await Http.GetFromJsonAsync<BlogPost[]>("/api/posts");
         }
         catch (Exception ex)
         {

@@ -16,20 +16,19 @@ using Microsoft.Azure.WebJobs.Extensions.CosmosDB;
 
 namespace BlazorApp.Api
 {
-    public static class PostsFunction
+    public static class BlogPostByRouteFunction
     {
-        [FunctionName("posts")]
+        [FunctionName("blogpostbyroute")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "blogpostbyroute/{postroute}")] HttpRequest req,
             ILogger log, [CosmosDB(
                 databaseName: "Blog",
                 collectionName: "BlogPost",
                 ConnectionStringSetting = "CosmosDBConnectionStringSetting",
-                SqlQuery ="SELECT * FROM c")] IEnumerable<BlogPost> blogPosts)
+                SqlQuery ="SELECT * FROM c where c.postRoute={postroute}")] IEnumerable<BlogPost> blogPosts)
         {
-
-            
-            return new OkObjectResult(blogPosts);
+            BlogPost post = blogPosts.FirstOrDefault();
+            return new OkObjectResult(post);
         }
     }
 }

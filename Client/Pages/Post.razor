@@ -1,0 +1,52 @@
+﻿@page "/post/{postroute}"
+
+@using BlazorApp.Shared
+@inject HttpClient Http
+<!-- Page Header-->
+@if (blogPost != null)
+{
+<header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>@blogPost.Title</h1>
+                    <h2 class="subheading">@blogPost.SubTitle</h2>
+                    <span class="meta">
+                        Posted by
+                        <a href="#!">@blogPost.Author</a>
+                        on @blogPost.Date.ToLongDateString()
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header> <!-- Post Content-->
+                                <article class="mb-4">
+                                    <div class="container px-4 px-lg-5">
+                                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                                @blogPost.Content
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article> }
+                                            else
+                                            {
+                                <span class="meta">
+                                   Loading.......
+                                </span>}
+@code { private BlogPost blogPost;
+    [Parameter]
+    public string postroute { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            blogPost = await Http.GetFromJsonAsync<BlogPost>("/api/blogpostbyroute/" + postroute);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+    } }
