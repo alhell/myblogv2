@@ -26,17 +26,45 @@
                                     <div class="container px-4 px-lg-5">
                                         <div class="row gx-4 gx-lg-5 justify-content-center">
                                             <div class="col-md-10 col-lg-8 col-xl-7">
-                                                @blogPost.Content
+                                                @((MarkupString)blogPost.Content)
                                             </div>
                                         </div>
                                     </div>
                                 </article> }
                                             else
                                             {
-                                <span class="meta">
-                                   Loading.......
-                                </span>}
-@code { private BlogPost blogPost;
+
+    <header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <h1>Loading.......</h1>
+                        <h2 class="subheading">Loading.......</h2>
+                        <span class="meta">
+                            Posted by
+                            <a href="#!">Loading.......</a>
+                            on Loading.......
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> <!-- Post Content-->
+    <article class="mb-4">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    Loading.......
+                </div>
+            </div>
+        </div>
+    </article>
+    
+}
+@code { 
+    
+    private BlogPost blogPost;
     [Parameter]
     public string postroute { get; set; }
     protected override async Task OnInitializedAsync()
