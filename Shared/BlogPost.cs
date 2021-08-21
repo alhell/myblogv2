@@ -27,6 +27,8 @@ namespace BlazorApp.Shared
 
         public string Author { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
