@@ -25,7 +25,7 @@ namespace BlazorApp.Api
                 databaseName: "Blog",
                 collectionName: "BlogPost",
                 ConnectionStringSetting = "CosmosDBConnectionStringSetting",
-                SqlQuery ="SELECT * FROM c")] IEnumerable<BlogPost> blogPosts)
+                SqlQuery ="SELECT * FROM c  ORDER BY c.Date DESC")] IEnumerable<BlogPost> blogPosts)
         {
 
             

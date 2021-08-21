@@ -18,6 +18,11 @@
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact">Contact</a></li>
                 <AuthorizeView>
                     <Authorized>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/managepost">Create Post</a></li>
+                    </Authorized>
+                </AuthorizeView>
+                <AuthorizeView>
+                    <Authorized>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/.auth/logout?post_logout_redirect_uri=/">Log out</a></li>
                     </Authorized>
                     <NotAuthorized>

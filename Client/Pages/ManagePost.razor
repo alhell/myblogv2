@@ -1,0 +1,140 @@
+﻿@page "/managepost"
+@using BlazorApp.Shared
+@using TinyMCE.Blazor
+@using Microsoft.Extensions.Logging
+@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Authorization
+@inject ILogger<ManagePost> Logger
+@inject HttpClient Http
+
+@attribute [Authorize(Roles = "owner") ]
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assets/img/contact-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="page-heading">
+                    <h1>Create Post</h1>
+                    <span class="subheading">Let`s create a post</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p>Create a post</p>
+                <div class="my-5">
+                    @*<EditForm Model="@post" OnValidSubmit="@HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <p>
+                            <label>
+                                Identifier:
+                                <InputText @bind-Value="post.PostRoute" />
+                            </label>
+                        </p>
+                        </EditForm>*@
+                    <EditForm id="createPostFrm" Model="@post" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+
+                        <div class="form-floating">
+                            <InputText class="form-control" @bind-Value="post.PostRoute" />
+                            <label for="name">Post Route</label>
+                        </div>
+                        <div class="form-floating">
+                            <InputText class="form-control" @bind-Value="post.Category" />
+                            <label for="name">Category</label>
+                        </div>
+                        <div class="form-floating">
+                            <InputText class="form-control" @bind-Value="post.Title" />
+                            <label for="name">Title</label>
+                        </div>
+                        <div class="form-floating">
+                            <InputText class="form-control" @bind-Value="post.SubTitle" />
+                            <label for="name">Subtitle</label>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-floating">
+                            <Editor class="form-control" ApiKey='my-api-key'
+                                    CloudChannel="5"
+                                    Conf="@editorConf" @bind-Value="post.Content" />
+
+                            <label for="name">Content</label>
+                        </div>
+
+                        <br />
+                        <!-- Submit success message-->
+                        <!---->
+                        <!-- This is what your users will see when the form-->
+                        <!-- has successfully submitted-->
+                        <div class="@showSuccessfulPostClass" id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">Form submission successful!</div>
+                                To activate this form, sign up at
+                                <br />
+                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+                            </div>
+                        </div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="@showInvalidPostClass" id="submitErrorMessage">
+                            <div class="text-center text-danger mb-3">
+                                <DataAnnotationsValidator />
+                                <ValidationSummary />
+                            </div>
+                        </div>
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Send</button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+@code { private bool showSuccessfulPost = false;
+
+    private string showSuccessfulPostClass => showSuccessfulPost ? "" : "d-none";
+
+
+    private bool showInvalidPost = false;
+
+    private string showInvalidPostClass => showInvalidPost ? "" : "d-none";
+
+
+    private Dictionary<string, object> editorConf = new Dictionary<string, object>{
+       { "menubar", true },
+       { "plugins", "link image code" },
+       { "toolbar", "undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code" }
+     };
+    private BlogPost post = new BlogPost() { Date = DateTime.UtcNow };
+
+
+
+
+
+    private async void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+        var json = JsonConvert.SerializeObject(post, Formatting.None);
+        var stringContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+        var result = await Http.PostAsync("/api/BlogPostCreate", stringContent).ConfigureAwait(false);
+        showInvalidPost = false;
+        showSuccessfulPost = true;
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        Logger.LogInformation("HandleInValidSubmit called");
+
+        // Process the valid form
+        showInvalidPost = true;
+        showSuccessfulPost = false;
+    } }
