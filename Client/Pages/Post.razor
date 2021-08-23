@@ -31,17 +31,32 @@
                                             <h2 class="section-heading">Comments</h2>
                                             @foreach (var comment in blogPost.Comments)
                                             {
-                                            <div class="col-md-10 col-lg-8 col-xl-7 bg-opacity-10 bg-primary ">
-                                                <p> @comment.Content </p>
-                                                <span class="meta">
-                                                    Posted by
-                                                    <a href="#!">@comment.Author</a>
-                                                    on @comment.Date.ToLongDateString()
-                                                </span>
-                                            </div>
+                                                if (!comment.IsApproved) { 
+                                                <AuthorizeView Roles="owner">
+                                                    <div class="col-md-10 col-lg-8 col-xl-7 bg-opacity-10 bg-primary">
+                                                        <p> @comment.Content </p>
+                                                        <span class="meta">
+                                                            Posted by
+                                                            <a href="#!">@comment.Author</a>
+                                                            on @comment.Date.ToLongDateString()
+                                                        </span>
+                                                    </div>
+                                            
+                                                </AuthorizeView>
+                    }
+                    else { 
+                                                <div class="col-md-10 col-lg-8 col-xl-7 bg-opacity-10 bg-primary">
+                                                    <p> @comment.Content </p>
+                                                    <span class="meta">
+                                                        Posted by
+                                                        <a href="#!">@comment.Author</a>
+                                                        on @comment.Date.ToLongDateString()
+                                                    </span>
+                                                </div>
+                                                }
                                             }
 
-                                        </div>
+</div>
                                     </div>
                                 </article>                                 
                                 }

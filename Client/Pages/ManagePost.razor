@@ -29,17 +29,6 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <p>Create a post</p>
                 <div class="my-5">
-                    @*<EditForm Model="@post" OnValidSubmit="@HandleValidSubmit">
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-
-                        <p>
-                            <label>
-                                Identifier:
-                                <InputText @bind-Value="post.PostRoute" />
-                            </label>
-                        </p>
-                        </EditForm>*@
                     <EditForm id="createPostFrm" Model="@post" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
 
                         <div class="form-floating">
@@ -98,20 +87,20 @@
 </main>
 @code { private bool showSuccessfulPost = false;
 
-    private string showSuccessfulPostClass => showSuccessfulPost ? "" : "d-none";
+        private string showSuccessfulPostClass => showSuccessfulPost ? "" : "d-none";
 
 
-    private bool showInvalidPost = false;
+        private bool showInvalidPost = false;
 
-    private string showInvalidPostClass => showInvalidPost ? "" : "d-none";
+        private string showInvalidPostClass => showInvalidPost ? "" : "d-none";
 
 
-    private Dictionary<string, object> editorConf = new Dictionary<string, object>{
+        private Dictionary<string, object> editorConf = new Dictionary<string, object>{
        { "menubar", true },
        { "plugins", "link image code" },
        { "toolbar", "undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code" }
      };
-    private BlogPost post = new BlogPost() { Date = DateTime.UtcNow };
+        private BlogPost post = new BlogPost() { Date = DateTime.UtcNow, Comments = new List<Comment>(), Author = "Helal Futloo" };
 
 
 
