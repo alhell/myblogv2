@@ -2,9 +2,11 @@
     <div class="container px-4 px-lg-5">
         <AuthorizeView>
             <Authorized>
-                <span class="navbar-brand">  Hey @context.User.Identity.Name</span>
+                <span class="navbar-brand">  Hey @context.User.Identity.Name </span>
             </Authorized>
-
+            <NotAuthorized>
+                <a class="navbar-brand" href="/">Helal Blog</a>
+            </NotAuthorized>
         </AuthorizeView>
 
         <button class="navbar-toggler @NavButtonCssClass" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">

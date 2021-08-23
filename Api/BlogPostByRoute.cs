@@ -27,7 +27,7 @@ namespace BlazorApp.Api
                 ConnectionStringSetting = "CosmosDBConnectionStringSetting",
                 SqlQuery ="SELECT * FROM c where c.PostRoute={postroute}")] IEnumerable<BlogPost> blogPosts, string postroute)
         {
-            var route = postroute;
+            
             BlogPost post = blogPosts.FirstOrDefault();
             return new OkObjectResult(post);
         }
